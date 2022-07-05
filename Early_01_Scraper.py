@@ -1,6 +1,7 @@
 import time
 import pandas as pd
 import numpy as np
+import re
 from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -48,15 +49,15 @@ area_list = ['jakarta-dki_g2000007','jawa-barat_g2000009','jawa-timur_g2000011',
 car_list = ['avanza', 'xpander', 'brio', 'rush', 'innova','cr-v', 'hr-v', 'jazz', 'yaris']
 bike_list = ['beat','vario-125','scoopy','vario-150','mio']
 brand_dict = dict({
-    'avanza' : 'toyota',
-    'rush' : 'toyota',
-    'innova' : 'toyota',
-    'yaris' : 'toyota',
-    'xpander' : 'mitsubishi',
-    'brio' : 'honda',
-    'cr-v' : 'honda',
-    'hr-v' : 'honda',
-    'jazz' : 'honda',
+    'toyota avanza' : 'toyota',
+    'toyota rush' : 'toyota',
+    'toyota innova' : 'toyota',
+    'toyota yaris' : 'toyota',
+    'mitsubishi xpander' : 'mitsubishi',
+    'honda brio' : 'honda',
+    'honda crv' : 'honda',
+    'honda hrv' : 'honda',
+    'honda jazz' : 'honda',
     'beat' : 'honda',
     'vario-125' : 'honda',
     'scoopy' : 'honda',
@@ -110,28 +111,50 @@ for area in area_list:
                 title = get_attribute_class("_35xN1")
                 price = get_attribute_class("_3FkyT")
                 brand = get_value(car)
-                type = get_attribute_class("_3tLee")
-                trans = get_attribute_xpath('//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div/div/div[4]/div[3]/div')
                 milage = get_attribute_xpath('//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div/div/div[4]/div[2]/div')
+                loc = get_attribute_xpath('//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[2]/div[3]/div[1]/div[2]/div')
+                trans = get_attribute_xpath('//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div/div/div[4]/div[3]/div')
                 fuel = get_attribute_xpath('//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div/div/div[4]/div[1]/div')
-                loc = get_attribute_class("ZGU9S")
+
+                if pd.isna(title) == False:
+                    title_s = re.sub(r'[^a-zA-Z ]+', '', title).strip()
+                    if title_s == 'honda brio satya':
+                        title_s = 'honda brio'
+                    elif title_s == 'toyota kijang innova':
+                        title_s = 'toyota innova'
+                    try:
+                        brand_n = brand_dict[title_s]
+                    except KeyError:
+                        brand_n = np.NaN
+                    years = int(re.findall("\d+", title)[0])
+                else:
+                    title_s = np.NaN
+                    brand_n = np.NaN
+                    years = np.NaN
+                if pd.isna(price) == False:
+                    price = int(''.join(re.findall("\d+", price)))
+                else:
+                    price = np.NaN
+
 
                 to_list = {
-                    'title': title,
+                    'title': title_s,
                     'price': price,
-                    'brand': brand,
-                    'type': type,
-                    'transmission': trans,
+                    'brand': brand_n,
+                    'type': car,
+                    'years': years,
                     'milage': milage,
-                    'fuel' : fuel,
                     'location': loc,
-                    'url': webpage
+                    'vehicle_type' : 'car',
+                    'url': webpage,
+                    'transmission': trans,
+                    'fuel' : fuel
                 }
                 print(to_list, 'page :', i)
                 attribute.append(to_list)
 
 attribute = pd.DataFrame(data=attribute)
-attribute.to_csv('Output\Early_Scraped_Car.csv', index=False)
+attribute.to_csv('Output\Early_Car_Scraped.csv', index=False)
 
 
 
@@ -177,17 +200,29 @@ for area in area_list:
                 milage = get_attribute_css("span[data-aut-id='value_mileage']")
                 loc = get_attribute_xpath('//*[@id="container"]/main/div/div/div/div[5]/div[1]/div/section/div/div[1]/div/span')
 
+                if pd.isna(years) == False:
+                    years = int(years)
+                else:
+                    years = np.NaN
+                if pd.isna(price) == False:
+                    price = int(''.join(re.findall("\d+", price)))
+                else:
+                    price = np.NaN
+
                 to_list = {
                 'title': title,
                 'price': price,
                 'brand' : brand,
+                'type' : bike,
                 'years': years,
                 'type' : type,
                 'milage': milage,
-                'location': loc
+                'location': loc,
+                'vehicle_type' : 'bike',
+                'url' : webpage
                 }
                 print(to_list, 'page :', i)
                 attribute.append(to_list)
 
 attribute = pd.DataFrame(data=attribute)
-attribute.to_csv('Output\Early_Scraped_Bike.csv', index=False)
+attribute.to_csv('Output\Early_Bike_Scraped.csv', index=False)
