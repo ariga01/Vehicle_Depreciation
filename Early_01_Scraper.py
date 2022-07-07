@@ -20,7 +20,7 @@ driver.maximize_window()
 
 
 # Function
-def get_values(css_tag, class_tag, xpath_tag):
+def get_values(css_tag="BLANK", class_tag="BLANK", xpath_tag="BLANK"):
     css_s = bool(css_tag)
     class_s = bool(class_tag)
     xpath_s = bool(xpath_tag)
