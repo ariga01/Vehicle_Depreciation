@@ -27,20 +27,20 @@ def get_values(css_tag="BLANK", class_tag="BLANK", xpath_tag="BLANK"):
 
     att = np.NaN
 
-    if css_s == True:
+    if css_s != "BLANK":
         try:
             att = driver.find_element(By.CSS_SELECTOR, css_tag).get_attribute("innerHTML")
         except:
             att = np.NaN
 
-    if pd.isna(att) == True and class_s == True:
+    if pd.isna(att) == True and class_s != "BLANK":
         try:
             attribute_data = driver.find_element(By.CLASS_NAME, class_tag)
             att = BeautifulSoup(attribute_data.get_attribute('outerHTML'), 'html.parser').text
         except:
             att = np.NaN
 
-    if pd.isna(att) == True and xpath_s == True:
+    if pd.isna(att) == True and xpath_s != "BLANK":
         try:
            att = driver.find_element(By.XPATH, xpath_tag).get_attribute("innerHTML")
         except:
@@ -137,7 +137,7 @@ for area in area_list:
                     xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[1]/div/div[1]'
                 )
                 loc = get_values(
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[6]/div[2]/div[2]/div[3]/div[1]/div[2]/div/text()'
+                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[2]/div[3]/div[1]/div[2]/div'
                 )
                 trans = get_values(
                     xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[4]/div[3]/div'
