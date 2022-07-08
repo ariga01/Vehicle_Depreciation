@@ -42,9 +42,9 @@ def get_values(css_tag="BLANK", class_tag="BLANK", xpath_tag="BLANK"):
 
     if pd.isna(att) == True and xpath_s != "BLANK":
         try:
-           att = driver.find_element(By.XPATH, xpath_tag).get_attribute("innerHTML")
+            att = driver.find_element(By.XPATH, xpath_tag).get_attribute("innerHTML")
         except:
-           att = np.NaN
+            att = np.NaN
 
     return att
 
@@ -134,7 +134,7 @@ for area in area_list:
                 )
                 brand = get_value(car)
                 milage = get_values(
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[1]/div/div[1]'
+                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div/div/div[4]/div[2]/div'
                 )
                 loc = get_values(
                     xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[2]/div[3]/div[1]/div[2]/div'
@@ -152,20 +152,22 @@ for area in area_list:
                         title_s = 'honda brio'
                     elif title_s == 'toyota kijang innova':
                         title_s = 'toyota innova'
+                    elif title_s == 'toyota kijang':
+                        title_s = 'toyota innova'
                     try:
                         brand_n = brand_dict[title_s]
                     except KeyError:
                         brand_n = np.NaN
                     try:
-                        type = type_dict[title_s]
+                        types = type_dict[title_s]
                     except KeyError:
-                        type = np.NaN
+                        types = np.NaN
                     years = int(re.findall("\d+", title)[0])
                 else:
                     title_s = np.NaN
                     brand_n = np.NaN
                     years = np.NaN
-                    type = np.NaN
+                    types = np.NaN
                 if pd.isna(price) == False:
                     price = int(''.join(re.findall("\d+", price)))
                 else:
@@ -180,7 +182,7 @@ for area in area_list:
                     'title': title_s,
                     'price': price,
                     'brand': brand_n,
-                    'type': car,
+                    'type': types,
                     'years': years,
                     'milage': milage_s,
                     'location': loc,
@@ -244,7 +246,6 @@ for area in area_list:
                     css_tag="span[data-aut-id='value_m_year']",
                     xpath_tag='//*[@id="container"]/main/div/div/div/div[4]/section[1]/div/div/div[1]/div/div[3]/div/span[2]'
                 )
-                type = bike
                 milage = get_values(
                     css_tag="span[data-aut-id='value_mileage']",
                     xpath_tag='//*[@id="container"]/main/div/div/div/div[4]/section[1]/div/div/div[1]/div/div[4]/div/span[2]'
@@ -273,7 +274,6 @@ for area in area_list:
                 'brand' : brand,
                 'type' : bike,
                 'years': years,
-                'type' : type,
                 'milage': milage_s,
                 'location': loc,
                 'vehicle_type' : 'bike',
