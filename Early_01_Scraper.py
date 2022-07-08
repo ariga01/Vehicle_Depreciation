@@ -33,14 +33,14 @@ def get_values(css_tag="BLANK", class_tag="BLANK", xpath_tag="BLANK"):
         except:
             att = np.NaN
 
-    if pd.isna(att) == True and class_s != "BLANK":
+    if pd.isna(att) is True and class_s != "BLANK":
         try:
             attribute_data = driver.find_element(By.CLASS_NAME, class_tag)
             att = BeautifulSoup(attribute_data.get_attribute('outerHTML'), 'html.parser').text
         except:
             att = np.NaN
 
-    if pd.isna(att) == True and xpath_s != "BLANK":
+    if pd.isna(att) is True and xpath_s != "BLANK":
         try:
             att = driver.find_element(By.XPATH, xpath_tag).get_attribute("innerHTML")
         except:
@@ -49,36 +49,38 @@ def get_values(css_tag="BLANK", class_tag="BLANK", xpath_tag="BLANK"):
     return att
 
 
-area_list = ['jakarta-dki_g2000007','jawa-barat_g2000009','jawa-timur_g2000011','banten_g2000004','jawa-tengah_g2000010','yogyakarta-di_g2000032']
-car_list = ['avanza', 'xpander', 'brio', 'rush', 'innova','cr-v', 'hr-v', 'jazz', 'yaris']
-bike_list = ['beat','vario-125','scoopy','vario-150','mio']
+area_list = ['jakarta-dki_g2000007', 'jawa-barat_g2000009', 'jawa-timur_g2000011', 'banten_g2000004',
+             'jawa-tengah_g2000010', 'yogyakarta-di_g2000032']
+car_list = ['avanza', 'xpander', 'brio', 'rush', 'innova', 'cr-v', 'hr-v', 'jazz', 'yaris']
+bike_list = ['beat', 'vario-125', 'scoopy', 'vario-150', 'mio']
 brand_dict = {
-    'toyota avanza' : 'toyota',
-    'toyota rush' : 'toyota',
-    'toyota innova' : 'toyota',
-    'toyota yaris' : 'toyota',
-    'mitsubishi xpander' : 'mitsubishi',
-    'honda brio' : 'honda',
-    'honda crv' : 'honda',
-    'honda hrv' : 'honda',
-    'honda jazz' : 'honda',
-    'beat' : 'honda',
-    'vario-125' : 'honda',
-    'scoopy' : 'honda',
-    'vario-150' : 'honda',
-    'mio' : 'yamaha'
+    'toyota avanza': 'toyota',
+    'toyota rush': 'toyota',
+    'toyota innova': 'toyota',
+    'toyota yaris': 'toyota',
+    'mitsubishi xpander': 'mitsubishi',
+    'honda brio': 'honda',
+    'honda crv': 'honda',
+    'honda hrv': 'honda',
+    'honda jazz': 'honda',
+    'beat': 'honda',
+    'vario-125': 'honda',
+    'scoopy': 'honda',
+    'vario-150': 'honda',
+    'mio': 'yamaha'
 }
 type_dict = {
-    'toyota avanza' : 'avanza',
-    'toyota rush' : 'rush',
-    'toyota innova' : 'innova',
-    'toyota yaris' : 'yaris',
-    'mitsubishi xpander' : 'xpander',
-    'honda brio' : 'brio',
-    'honda crv' : 'cr-v',
-    'honda hrv' : 'hr-v',
-    'honda jazz' : 'jazz'
+    'toyota avanza': 'avanza',
+    'toyota rush': 'rush',
+    'toyota innova': 'innova',
+    'toyota yaris': 'yaris',
+    'mitsubishi xpander': 'xpander',
+    'honda brio': 'brio',
+    'honda crv': 'cr-v',
+    'honda hrv': 'hr-v',
+    'honda jazz': 'jazz'
 }
+
 
 # Call value using key
 def get_value(key_value):
@@ -90,7 +92,6 @@ def get_value(key_value):
 
 
 attribute = []
-
 
 # Main loop for car
 for area in area_list:
@@ -123,30 +124,30 @@ for area in area_list:
                 time.sleep(2.5)
 
                 title = get_values(
-                    css_tag = "span[data-aut-id='itemTitle']",
-                    class_tag = "_35xN1",
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[2]'
+                    css_tag="span[data-aut-id='itemTitle']",
+                    class_tag="_35xN1",
+                    xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[2]'
                 )
                 price = get_values(
-                    css_tag = "span[data-aut-id='itemTitle']",
-                    class_tag = "span[data-aut-id='itemPrice']",
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[1]/div/div[1]'
+                    css_tag="span[data-aut-id='itemTitle']",
+                    class_tag="span[data-aut-id='itemPrice']",
+                    xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[1]/div/div[1]'
                 )
                 brand = get_value(car)
                 milage = get_values(
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div/div/div[4]/div[2]/div'
+                    xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div/div/div[4]/div[2]/div'
                 )
                 loc = get_values(
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[2]/div[3]/div[1]/div[2]/div'
+                    xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[2]/div[3]/div[1]/div[2]/div'
                 )
                 trans = get_values(
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[4]/div[3]/div'
+                    xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[4]/div[3]/div'
                 )
                 fuel = get_values(
-                    xpath_tag ='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[4]/div[1]/div'
+                    xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[4]/div[1]/div'
                 )
 
-                if pd.isna(title) == False:
+                if not pd.isna(title):
                     title_s = re.sub(r'[^a-zA-Z ]+', '', title).strip()
                     if title_s == 'honda brio satya':
                         title_s = 'honda brio'
@@ -168,11 +169,11 @@ for area in area_list:
                     brand_n = np.NaN
                     years = np.NaN
                     types = np.NaN
-                if pd.isna(price) == False:
+                if not pd.isna(price):
                     price = int(''.join(re.findall("\d+", price)))
                 else:
                     price = np.NaN
-                if pd.isna(milage) == False:
+                if not pd.isna(milage):
                     try:
                         milage_s = re.sub(r'.Km|.km', '', milage)
                     except:
@@ -186,10 +187,10 @@ for area in area_list:
                     'years': years,
                     'milage': milage_s,
                     'location': loc,
-                    'vehicle_type' : 'car',
+                    'vehicle_type': 'car',
                     'url': webpage,
                     'transmission': trans,
-                    'fuel' : fuel
+                    'fuel': fuel
                 }
                 print(to_list, 'page :', i)
                 attribute.append(to_list)
@@ -197,10 +198,7 @@ for area in area_list:
 attribute = pd.DataFrame(data=attribute)
 attribute.to_csv('Output\Early_Car_Scraped.csv', index=False)
 
-
-
 attribute = []
-
 
 # Main loop for bike
 for area in area_list:
@@ -254,30 +252,30 @@ for area in area_list:
                     xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div/section/div/div[1]/div/span'
                 )
 
-                if pd.isna(years) == False:
+                if not pd.isna(years):
                     years = int(years)
                 else:
                     years = np.NaN
-                if pd.isna(price) == False:
+                if not pd.isna(price):
                     price = int(''.join(re.findall("\d+", price)))
                 else:
                     price = np.NaN
-                if pd.isna(milage) == False:
+                if not pd.isna(milage):
                     try:
                         milage_s = re.sub(r'.Km|.km', '', milage)
                     except:
                         milage_s = milage
 
                 to_list = {
-                'title': title,
-                'price': price,
-                'brand' : brand,
-                'type' : bike,
-                'years': years,
-                'milage': milage_s,
-                'location': loc,
-                'vehicle_type' : 'bike',
-                'url' : webpage
+                    'title': title,
+                    'price': price,
+                    'brand': brand,
+                    'type': bike,
+                    'years': years,
+                    'milage': milage_s,
+                    'location': loc,
+                    'vehicle_type': 'bike',
+                    'url': webpage
                 }
                 print(to_list, 'page :', i)
                 attribute.append(to_list)
