@@ -98,9 +98,9 @@ for area in area_list:
     for car in car_list:
         for i in range(1, 101):
             try:
-                link = f'https://www.olx.co.id/{area}/mobil_c86/q-{car}?page={i}&filter=price_min_30000000'
+                link = f'https://www.olx.co.id/{area}/mobil_c86/q-{car}?page={i}&filter=price_min_90000000'
                 driver.get(link)
-                time.sleep(3)
+                time.sleep(5)
             except:
                 pass
 
@@ -121,16 +121,16 @@ for area in area_list:
                     driver.get(webpage)
                 except:
                     pass
-                time.sleep(2.5)
+                time.sleep(4)
 
                 title = get_values(
                     css_tag="span[data-aut-id='itemTitle']",
-                    class_tag="_35xN1",
+                    class_tag="_3Mfu-._35xN1",
                     xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[1]/div[1]/div[1]/div/div[2]'
                 )
                 price = get_values(
-                    css_tag="span[data-aut-id='itemTitle']",
-                    class_tag="span[data-aut-id='itemPrice']",
+                    css_tag="span[data-aut-id='itemPrice']",
+                    class_tag="_31KwC._3FkyT",
                     xpath_tag='//*[@id="container"]/main/div/div/div/div[5]/div[2]/div[1]/div/div[1]'
                 )
                 brand = get_value(car)
@@ -163,7 +163,10 @@ for area in area_list:
                         types = type_dict[title_s]
                     except KeyError:
                         types = np.NaN
-                    years = int(re.findall("\d+", title)[0])
+                    try:
+                        years = int(re.findall("\d+", title)[0])
+                    except:
+                        years = np.NaN
                 else:
                     title_s = np.NaN
                     brand_n = np.NaN
@@ -178,6 +181,8 @@ for area in area_list:
                         milage_s = re.sub(r'.Km|.km', '', milage)
                     except:
                         milage_s = milage
+                else:
+                    milage_s = milage
 
                 to_list = {
                     'title': title_s,
@@ -207,7 +212,7 @@ for area in area_list:
             try:
                 link = f'https://www.olx.co.id/{area}/motor_c87/q-{bike}?page={i}&filter=price_min_1000000'
                 driver.get(link)
-                time.sleep(3)
+                time.sleep(5)
             except:
                 pass
 
@@ -229,7 +234,7 @@ for area in area_list:
                 except:
                     pass
 
-                time.sleep(2.5)
+                time.sleep(4)
 
                 title = get_values(
                     css_tag="span[data-aut-id='itemTitle']",
@@ -265,6 +270,8 @@ for area in area_list:
                         milage_s = re.sub(r'.Km|.km', '', milage)
                     except:
                         milage_s = milage
+                else:
+                    milage_s - milage
 
                 to_list = {
                     'title': title,
