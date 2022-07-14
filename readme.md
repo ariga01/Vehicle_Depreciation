@@ -7,6 +7,7 @@ Personal vehicle is extremely important things for Indonesian. Because of lackin
 ## Objective
 
 - Find the factors affecting vehicle price
+- Plot the possible effect of years and milage for price depreciation
 - Find interesting insight out of the data
 
 ## Workflow
@@ -27,7 +28,7 @@ For this project, I use data from the following location:
 - East Java
 - Yogyakarta
 
-I use data from the aforementioned location because those locations have the most vehicle listing. It is to be noted that the raw data is extremely dirty and we have to drop lots of error value because we can't exactly use missing data, which may skews the result.
+I use data from the aforementioned location because those locations have the most vehicle listing. It is to be noted that the raw data is extremely dirty and we have to drop lots of error value because we can't exactly use the missing data, which may skews the result.
 
 During visualization process, I need to exclude few outliers data to make the data more normal. Usually, the reason why the data may contain outliers is because faulty data is still being included in the final process.
 
