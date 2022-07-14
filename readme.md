@@ -1,5 +1,7 @@
 # _**Vehicle Depreciation Analysis**_
 
+[Tableau Presentation](https://tabsoft.co/3yFECXb)
+
 ## About This Project
 
 Personal vehicle is extremely important things for Indonesian. Because of lacking public transportation, many Indonesian use their personal vehicle. In this project, we will try to analyze the second-hand market for bike and car, and then get the best action we can make regarding vehicle purchase.
